@@ -1,4 +1,4 @@
-//import 'package:fasilah_m1/features/registration/login/view.dart';
+import 'package:fasilah_m1/features/registration/login/view.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../shared/components/constants.dart';
@@ -70,7 +70,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   child: SizedBox(
                     child: TabBarView(
                       children: [
-                        //LoginScreen(),
+                        LoginScreen(),
                         SignUpScreen(),
                       ],
                     ),
