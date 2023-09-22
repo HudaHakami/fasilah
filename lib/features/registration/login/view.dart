@@ -4,7 +4,7 @@ import '../../../shared/components/components.dart';
 import '../../../shared/components/constants.dart';
 import '../../../shared/components/navigator.dart';
 import '../../../shared/styles/colors.dart';
-//import '../../admin/home/view.dart';
+import '../../admin/home/view.dart';
 import '../reset_password/view.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -85,7 +85,9 @@ class _LoginScreenState extends State<LoginScreen> {
               Center(
                 child: ButtonTemplate(
                   color: AppColors.brown,
-                  onPressed: () {},//----->admin pages
+                  onPressed: () {
+                    navigateTo(context, const AdminHomeScreen());
+                  },//----->admin pages
                   minwidth: width(context, 2),
                   text1: 'login',
                 ),
