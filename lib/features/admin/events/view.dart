@@ -1,5 +1,5 @@
-//import 'package:fasilah/features/admin/events/accepted_events.dart';
-//import 'package:fasilah/features/admin/events/waiting_events.dart';
+import 'package:fasilah_m1/features/admin/events/accepted_events.dart';
+import 'package:fasilah_m1/features/admin/events/waiting_events.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -101,11 +101,13 @@ class _MangeEventsScreenState extends State<MangeEventsScreen> {
                   ),
                   const Expanded(
                     child: SizedBox(
+                      child: TabBarView(
+                        children: [
+                          WaitingEvents(),
+                          AcceptedEvents()
 
-
-
-
-
+                        ],
+                      ),
                     ),
                   ),
                 ]),

@@ -1,10 +1,12 @@
+import 'package:fasilah_m1/features/admin/courses/waiting_courses.dart';
 import 'package:fasilah_m1/shared/components/navigator.dart';
 import 'package:fasilah_m1/shared/styles/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+
 import '../../../shared/components/components.dart';
 import '../../../shared/styles/styles.dart';
-
+import 'accepted_courses.dart';
 class MangeCoursesScreen extends StatefulWidget {
   const MangeCoursesScreen({super.key});
 
@@ -97,10 +99,12 @@ class _MangeCoursesScreenState extends State<MangeCoursesScreen> {
                   ),
                   const Expanded(
                     child: SizedBox(
-
-
-
-
+                      child: TabBarView(
+                        children: [
+                          WaitingCourses(),
+                          AcceptedCourses()
+                        ],
+                      ),
                     ),
                   ),
                 ]),
