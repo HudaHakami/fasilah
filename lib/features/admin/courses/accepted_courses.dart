@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-
+import 'package:fasilah_m1/shared/components/navigator.dart';
 import 'package:fasilah_m1/shared/styles/images.dart';
-
+import 'package:fasilah_m1/features/admin/courses/courses_info.dart';
 
 import '../../../shared/components/constants.dart';
 import '../../../shared/styles/colors.dart';
@@ -21,7 +21,7 @@ class _AcceptedCoursesState extends State<AcceptedCourses> {
       itemBuilder: (context, index) {
         return InkWell(
           onTap: (){
-
+            navigateTo(context, const CoursesInfo(type: 'accepted'));
           },
           child: Container(
             width: width(context, 1),

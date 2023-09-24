@@ -5,7 +5,8 @@ import '../../../shared/components/navigator.dart';
 import '../../../shared/styles/colors.dart';
 import '../../../shared/styles/images.dart';
 import '../../../shared/styles/styles.dart';
-//import 'event_info.dart';
+import 'event_info.dart';
+
 class WaitingEvents extends StatefulWidget {
   const WaitingEvents({super.key});
 
@@ -57,7 +58,7 @@ class _WaitingEventsState extends State<WaitingEvents> {
                 children: [
                   IconButton(
                       onPressed: () {
-                       // navigateTo(context,  const EventInfo(type: 'waiting',));
+                        navigateTo(context,  const EventInfo(type: 'waiting',));
                       },
                       icon: const Icon(Icons.arrow_forward_ios,
                         color: AppColors.green ,

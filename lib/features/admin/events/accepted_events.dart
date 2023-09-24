@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-
+import 'event_info.dart';
 import '../../../shared/components/constants.dart';
-
 import '../../../shared/styles/colors.dart';
 import '../../../shared/styles/images.dart';
 import '../../../shared/styles/styles.dart';
+import '../../../shared/components/navigator.dart';
 
 
 class AcceptedEvents extends StatefulWidget {
@@ -21,7 +21,7 @@ class _AcceptedEventsState extends State<AcceptedEvents> {
       itemBuilder: (context, index) {
         return InkWell(
           onTap: () {
-
+            navigateTo(context, const EventInfo(type: 'accepted'));
           },
           child: Container(
             width: width(context, 1),

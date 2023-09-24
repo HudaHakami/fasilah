@@ -1,12 +1,11 @@
-//import 'package:fasilah_m1/shared/components/navigator.dart';
-import 'package:fasilah_m1/shared/styles/images.dart';
+import '../../../shared/components/navigator.dart';
+import '../../../shared/styles/images.dart';
 import 'package:flutter/material.dart';
 
 import '../../../shared/components/constants.dart';
 import '../../../shared/styles/colors.dart';
-//import '../../../shared/styles/images.dart';
 import '../../../shared/styles/styles.dart';
-//import 'courses_info.dart';
+import 'courses_info.dart';
 
 class WaitingCourses extends StatefulWidget {
   const WaitingCourses({super.key});
@@ -62,7 +61,7 @@ class _WaitingCoursesState extends State<WaitingCourses> {
                 children: [
                   IconButton(
                       onPressed: () {
-                       // navigateTo(context,  const CoursesInfo(type: 'waiting',));
+                       navigateTo(context,  const CoursesInfo(type: 'waiting',));
                       },
                       icon: const Icon(Icons.arrow_forward_ios,
                         color: AppColors.green ,
