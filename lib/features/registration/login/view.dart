@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../../../shared/components/components.dart';
-import '../../../shared/components/constants.dart';
-import '../../../shared/components/navigator.dart';
+import 'package:fasilah_m1/shared/components/components.dart';
+import 'package:fasilah_m1/shared/components/constants.dart';
+import 'package:fasilah_m1/shared/components/navigator.dart';
 import '../../../shared/styles/colors.dart';
 import '../../admin/home/view.dart';
 import '../reset_password/view.dart';
@@ -80,19 +80,22 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(
                 height: 40,
               ),
-
               // login button
               Center(
                 child: ButtonTemplate(
                   color: AppColors.brown,
                   onPressed: () {
                     navigateTo(context, const AdminHomeScreen());
-                  },//----->admin pages
+                  },
                   minwidth: width(context, 2),
                   text1: 'login',
                 ),
               ),
+              Padding(
+                padding:
+                const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
 
+              ),
             ],
           ),
         ),

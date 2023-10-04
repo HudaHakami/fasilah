@@ -55,13 +55,19 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                           height: 1.5,
                           fontWeight: FontWeight.w800),
                     ),
-                    tabs: const <Widget>[
-                      Tab(
-                        text: "Login",
+                    tabs:  <Widget>[
+                      SizedBox(
+                        width: width(context, 2.5),
+                        child: const Tab(
+                          text: "Login",
+                        ),
                       ),
-                      Tab(
-                        text: 'Sign up',
+                      SizedBox(
+                        width: width(context, 2.5),
+                        child: const Tab(
+                          text: 'Sign up',
 
+                        ),
                       ),
                     ],
                   )),

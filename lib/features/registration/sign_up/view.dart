@@ -1,7 +1,12 @@
+import 'package:fasilah_m1/features/admin/home/view.dart';
+import 'package:fasilah_m1/shared/components/navigator.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../../../../shared/components/components.dart';
 import '../../../../shared/components/constants.dart';
 import '../../../../shared/styles/colors.dart';
+import '../../Doctor/home/view.dart';
+
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -10,9 +15,7 @@ class SignUpScreen extends StatefulWidget {
   State<SignUpScreen> createState() => _SignUpScreenState();
 }
 
-enum Type { doctor, student, admin }
-
-Type? selectedType;
+String? selectedType;
 
 class _SignUpScreenState extends State<SignUpScreen> {
   final formKey = GlobalKey<FormState>();
@@ -80,12 +83,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
               children: [
                 SizedBox(
                   width: width(context, 3),
-                  child: RadioListTile<Type>(
+                  child: RadioListTile(
                     contentPadding: const EdgeInsets.symmetric(horizontal: 5),
                     title: const Text('Student'),
-                    value: Type.student,
+                    value: 'student',
                     groupValue: selectedType,
-                    onChanged: (Type? value) {
+                    onChanged: (value) {
                       setState(() {
                         selectedType = value;
                       });
@@ -94,12 +97,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
                 SizedBox(
                   width: width(context, 3),
-                  child: RadioListTile<Type>(
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 5),
+                  child: RadioListTile(
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 10),
                     title: const Text('Doctor'),
-                    value: Type.doctor,
+                    value: 'doctor',
                     groupValue: selectedType,
-                    onChanged: (Type? value) {
+                    onChanged: (value) {
                       setState(() {
                         selectedType = value;
                       });
@@ -108,12 +111,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
                 SizedBox(
                   width: width(context, 3),
-                  child: RadioListTile<Type>(
+                  child: RadioListTile(
                     contentPadding: const EdgeInsets.symmetric(horizontal: 5),
                     title: const Text('admin'),
-                    value: Type.admin,
+                    value: 'admin',
                     groupValue: selectedType,
-                    onChanged: (Type? value) {
+                    onChanged: (value) {
                       setState(() {
                         selectedType = value;
                       });
@@ -129,7 +132,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
             Center(
               child: ButtonTemplate(
                 color: AppColors.brown,
-                onPressed: () {},
+                onPressed: () {
+                  if (kDebugMode) {
+                    print(selectedType);
+                  }
+                  var type = selectedType;
+                  if (kDebugMode) {
+                    print(type);
+                  }
+                  if (type == 'admin') {
+                    navigateTo(context, const AdminHomeScreen());
+                  }
+                  if (type == 'doctor')  {
+                    navigateTo(context, const DoctorHomeScreen());
+                  }
+                },
                 minwidth: width(context, 2),
                 text1: 'sign up',
               ),
