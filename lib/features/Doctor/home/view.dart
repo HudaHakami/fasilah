@@ -1,6 +1,7 @@
 import 'package:fasilah_m1/features/Doctor/home/events_list.dart';
 import 'package:fasilah_m1/features/Doctor/profile/view.dart';
 import 'package:fasilah_m1/shared/components/components.dart';
+import 'package:fasilah_m1/features/student/favorite/view.dart';
 import 'package:fasilah_m1/shared/components/constants.dart';
 import 'package:fasilah_m1/shared/components/navigator.dart';
 import 'package:fasilah_m1/shared/styles/colors.dart';
@@ -8,6 +9,7 @@ import 'package:fasilah_m1/shared/styles/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../../shared/network/local/constant.dart';
 import 'courses_list.dart';
 
 class DoctorHomeScreen extends StatefulWidget {
@@ -64,7 +66,16 @@ class _DoctorHomeScreenState extends State<DoctorHomeScreen> {
                   navigateTo(context, const DoctorProfile());
                 },
               ),
-              const SizedBox(),
+              type == 'student' ?    ListTile(
+                leading: const Icon(Icons.favorite),
+                title: Text(
+                  'Favorite',
+                  style: AppTextStyles.name,
+                ),
+                onTap: () {
+                  navigateTo(context, const FavoriteScreen());
+                },
+              ) : const SizedBox(),
               Expanded(
                 child: Align(
                   alignment: Alignment.bottomLeft,
@@ -92,10 +103,10 @@ class _DoctorHomeScreenState extends State<DoctorHomeScreen> {
               parent: NeverScrollableScrollPhysics()),
           child: Column(
             children: [
-              //SearchTextField(
-                //text: 'search',
-               // controller: searchController,
-             // ),
+              SearchTextField(
+                text: 'search',
+                controller: searchController,
+              ),
               Container(
                 height: MediaQuery.of(context).size.height / 1,
                 decoration: const BoxDecoration(

@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:fasilah_m1/shared/styles/images.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -6,7 +8,6 @@ import '../styles/colors.dart';
 import '../styles/styles.dart';
 import 'constants.dart';
 
-// ignore: must_be_immutable
 class ButtonTemplate extends StatelessWidget {
   ButtonTemplate({
     Key? key,
@@ -52,7 +53,6 @@ class ButtonTemplate extends StatelessWidget {
   }
 }
 
-// ignore: must_be_immutable
 class SmallButtonTemplate extends StatelessWidget {
   SmallButtonTemplate({
     Key? key,
@@ -100,7 +100,6 @@ class SmallButtonTemplate extends StatelessWidget {
   }
 }
 
-// ignore: must_be_immutable
 class TextFieldTemplate extends StatelessWidget {
   TextFieldTemplate(
       {Key? key,
@@ -180,7 +179,51 @@ class TextFieldTemplate extends StatelessWidget {
   }
 }
 
-// ignore: must_be_immutable
+class SearchTextField extends StatelessWidget {
+  final String? text;
+  final TextEditingController? controller;
+
+  const SearchTextField({
+    super.key,
+    required this.text,
+    required this.controller,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 50,
+      width: width(context, 1),
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+      child: TextFormField(
+        controller: controller,
+        decoration: InputDecoration(
+            hintText: text,
+            hintStyle: const TextStyle(color: AppColors.greyDark, fontSize: 15),
+            suffixIcon: const Icon(
+              Icons.search,
+              color: AppColors.greyDark,
+            ),
+            fillColor: AppColors.white2,
+            filled: true,
+            enabledBorder: const OutlineInputBorder(
+              borderSide: BorderSide(color: AppColors.greyDark, width: 1.5),
+            ),
+            focusedBorder: const OutlineInputBorder(
+              borderSide: BorderSide(color: AppColors.grey, width: 1.5),
+            ),
+            errorBorder: const OutlineInputBorder(
+              borderSide: BorderSide(color: AppColors.grey, width: 1.5),
+            ),
+            disabledBorder: const OutlineInputBorder(
+              borderSide: BorderSide(color: AppColors.grey, width: 1.5),
+            )),
+      ),
+    );
+  }
+}
+
 class ItemBox extends StatelessWidget {
   String? text;
   void Function()? onPressed;
@@ -227,7 +270,6 @@ class ItemBox extends StatelessWidget {
   }
 }
 
-// ignore: must_be_immutable
 class Box extends StatelessWidget {
   double? height;
   double? width;
@@ -267,7 +309,6 @@ class Box extends StatelessWidget {
   }
 }
 
-// ignore: must_be_immutable
 class DataItem extends StatelessWidget {
   String? image;
   String? text;
@@ -331,9 +372,9 @@ Color? chooseToastColor(ToastStates state) {
   return color;
 }
 
-// ignore: must_be_immutable
 class BackgroundBox extends StatelessWidget {
   Widget? widget;
+
   BackgroundBox({required this.widget, super.key});
 
   @override
@@ -359,5 +400,125 @@ class BackgroundBox extends StatelessWidget {
         // Expanded(child: NavigationFile()),
       ],
     );
+  }
+}
+
+class TextFieldUser extends StatelessWidget {
+  final String? hintText;
+  final String labelText;
+  final String? txt;
+  final bool scure;
+  Function? validator;
+  final TextEditingController? controller;
+  TextInputType? keyType;
+  void Function()? onTap;
+
+
+  // ignore: use_key_in_widget_constructors
+  TextFieldUser(
+      {this.hintText,
+      required this.labelText,
+      this.controller,
+      required this.scure,
+      required this.validator,
+      required this.keyType,
+      this.onTap,
+      initialValue,
+      this.txt});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+      child: TextFormField(
+        initialValue: txt,
+        validator: (value) => validator!(value),
+        controller: controller,
+        onTap: onTap,
+        obscureText: scure,
+        keyboardType: keyType,
+        decoration: InputDecoration(
+          // prefixIcon: Icon(Icons.star,size: 5,color: Colors.red,),
+          labelText: labelText,
+          labelStyle: AppTextStyles.labelStyle,
+          hintText: hintText,
+          hintStyle: AppTextStyles.hintStyle,
+          floatingLabelBehavior: FloatingLabelBehavior.always,
+        ),
+      ),
+    );
+  }
+}
+
+
+class Header extends StatelessWidget {
+  final String? text;
+  TextStyle? style;
+  AlignmentGeometry ? alignment;
+
+  Header({this.text, this.style, this.alignment, Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+        child: Align(
+          alignment: alignment!,
+          child: Text(
+            text!,
+            style: style,
+            maxLines: 2,
+            textDirection: TextDirection.rtl,
+          ),
+        ));
+  }
+}
+
+
+class DisplayedTextFieldTemplate extends StatelessWidget {
+  DisplayedTextFieldTemplate({Key? key,
+    required this.hintText,
+    required this.labelText,
+    this.controller,
+    this.readOnly = false,
+    this.lines})
+      : super(key: key);
+
+  String hintText;
+  String labelText;
+  TextEditingController? controller;
+  int? lines;
+  bool readOnly;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 30,
+      ),
+      child: TextFormField(
+        maxLines: lines,
+        controller: controller,
+        readOnly: readOnly,
+        decoration: InputDecoration(
+            hintText: hintText,
+            border: InputBorder.none,
+            filled: true,
+            fillColor: AppColors.white2,
+            hintStyle:
+            const TextStyle(color: AppColors.greyDark, fontSize: 15),
+            enabledBorder: const OutlineInputBorder(
+              borderSide: BorderSide(color: AppColors.grey, width: 1.5),
+            ),
+            focusedBorder: const OutlineInputBorder(
+              borderSide: BorderSide(color: AppColors.grey, width: 1.5),
+            ),
+            errorBorder: const OutlineInputBorder(
+              borderSide: BorderSide(color: AppColors.grey, width: 1.5),
+            ),
+            disabledBorder: const OutlineInputBorder(
+              borderSide: BorderSide(color: AppColors.grey, width: 1.5),
+            )),
+      ),);
   }
 }

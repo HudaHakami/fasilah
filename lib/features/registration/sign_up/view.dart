@@ -1,12 +1,12 @@
 import 'package:fasilah_m1/features/admin/home/view.dart';
 import 'package:fasilah_m1/shared/components/navigator.dart';
+import 'package:fasilah_m1/shared/network/local/constant.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../../../../shared/components/components.dart';
 import '../../../../shared/components/constants.dart';
 import '../../../../shared/styles/colors.dart';
-import '../../Doctor/home/view.dart';
-
+import '../../navigation/view.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -136,15 +136,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   if (kDebugMode) {
                     print(selectedType);
                   }
-                  var type = selectedType;
+                  type = selectedType;
                   if (kDebugMode) {
                     print(type);
                   }
+                  // FirebaseAuth.instance.createUserWithEmailAndPassword(email: 'haneengheas@gmail.com', password: '123456').then((value) => {
+                  //   debugPrint(value.user!.uid)
+                  // });
                   if (type == 'admin') {
                     navigateTo(context, const AdminHomeScreen());
-                  }
-                  if (type == 'doctor')  {
-                    navigateTo(context, const DoctorHomeScreen());
+                  } else {
+                    navigateTo(context, NavigationScreen());
                   }
                 },
                 minwidth: width(context, 2),

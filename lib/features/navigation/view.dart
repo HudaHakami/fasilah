@@ -1,10 +1,10 @@
 // ignore_for_file: library_private_types_in_public_api
 
-import 'package:fasilah/features/Doctor/certificate/view.dart';
-import 'package:fasilah/features/Doctor/request/view.dart';
-import 'package:fasilah/features/Doctor/subscriptions_doctor/view.dart';
-import 'package:fasilah/shared/styles/colors.dart';
-import 'package:fasilah/shared/styles/styles.dart';
+import 'package:fasilah_m1/features/Doctor/certificate/view.dart';
+import 'package:fasilah_m1/features/Doctor/request/view.dart';
+import 'package:fasilah_m1/features/Doctor/subscriptions_doctor/view.dart';
+import 'package:fasilah_m1/shared/styles/colors.dart';
+import 'package:fasilah_m1/shared/styles/styles.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 

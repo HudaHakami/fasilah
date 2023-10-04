@@ -8,6 +8,7 @@ import '../../admin/events/event_info.dart';
 class EventsScreen extends StatefulWidget {
   const EventsScreen({super.key});
 
+
   @override
   State<EventsScreen> createState() => _EventsScreenState();
 }
