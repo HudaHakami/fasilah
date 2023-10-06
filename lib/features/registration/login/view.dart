@@ -1,8 +1,10 @@
+import 'package:fasilah_m1/features/visitors/view.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:fasilah_m1/shared/components/components.dart';
-import 'package:fasilah_m1/shared/components/constants.dart';
-import 'package:fasilah_m1/shared/components/navigator.dart';
+import '../../../shared/components/components.dart';
+import '../../../shared/components/constants.dart';
+import '../../../shared/components/navigator.dart';
+import '../../../shared/network/local/constant.dart';
 import '../../../shared/styles/colors.dart';
 import '../../admin/home/view.dart';
 import '../reset_password/view.dart';
@@ -94,7 +96,17 @@ class _LoginScreenState extends State<LoginScreen> {
               Padding(
                 padding:
                 const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-
+                child: InkWell(
+                  onTap: () => {
+                    type = 'visitors' ,
+                    navigateTo(context, const VisitorScreen())},
+                  child: Text("Continue as a visitor",
+                      style: GoogleFonts.tajawal(
+                        fontSize: 18,
+                        color: AppColors.brown,
+                        decoration: TextDecoration.underline,
+                      )),
+                ),
               ),
             ],
           ),
