@@ -1,5 +1,6 @@
 String  ? type ;
-
+String  ? uId = '' ;
+String  ? token ;
 
 //  import 'package:intl/intl.dart';
 //
