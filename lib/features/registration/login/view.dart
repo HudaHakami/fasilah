@@ -1,8 +1,5 @@
-<<<<<<< HEAD
 import 'package:fasilah_m1/features/navigation/view.dart';
 import 'package:fasilah_m1/features/registration/login/cubit/login_cubit.dart';
-=======
->>>>>>> 5c1725bbff958ea0e2045205c008d351b61b45e7
 import 'package:fasilah_m1/features/visitors/view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -145,44 +142,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   ],
                 ),
               ),
-<<<<<<< HEAD
             ),
           );
         },
-=======
-              const SizedBox(
-                height: 40,
-              ),
-              // login button
-              Center(
-                child: ButtonTemplate(
-                  color: AppColors.brown,
-                  onPressed: () {
-                    navigateTo(context, const AdminHomeScreen());
-                  },
-                  minwidth: width(context, 2),
-                  text1: 'login',
-                ),
-              ),
-              Padding(
-                padding:
-                const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                child: InkWell(
-                  onTap: () => {
-                    type = 'visitors' ,
-                    navigateTo(context, const VisitorScreen())},
-                  child: Text("Continue as a visitor",
-                      style: GoogleFonts.tajawal(
-                        fontSize: 18,
-                        color: AppColors.brown,
-                        decoration: TextDecoration.underline,
-                      )),
-                ),
-              ),
-            ],
-          ),
-        ),
->>>>>>> 5c1725bbff958ea0e2045205c008d351b61b45e7
       ),
     );
   }

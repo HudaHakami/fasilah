@@ -1,8 +1,7 @@
-<<<<<<< HEAD
 import 'package:fasilah_m1/features/visitors/events_list.dart';
-=======
+
 import "package:fasilah_m1/features/visitors/events_list.dart";
->>>>>>> 5c1725bbff958ea0e2045205c008d351b61b45e7
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../shared/components/components.dart';
