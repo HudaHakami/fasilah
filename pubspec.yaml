@@ -48,19 +48,12 @@ dependencies:
   intl:
   flutter_expandable_fab: ^2.0.0
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 5c1725bbff958ea0e2045205c008d351b61b45e7
   # fire base
   firebase_core:
   firebase_auth:
   cloud_firestore:
   firebase_storage:
-<<<<<<< HEAD
   firebase_messaging: ^14.6.8
-=======
->>>>>>> 5c1725bbff958ea0e2045205c008d351b61b45e7
 
 
   # The following adds the Cupertino Icons font to your application.
