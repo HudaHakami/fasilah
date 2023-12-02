@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import '../../../../models/courses_model.dart';
 import '../../../../shared/components/constants.dart';
 import '../../../../shared/components/navigator.dart';
 import '../../../../shared/styles/colors.dart';
-import '../../../../shared/styles/images.dart';
 import '../../../../shared/styles/styles.dart';
-import '../../../admin/courses/courses_info.dart';
+import '../../user_course_info.dart';
+
 class WaitingCourses extends StatefulWidget {
-  const WaitingCourses({super.key});
+  final List<CourseModel> waitingCourseList;
+
+  const WaitingCourses({required this.waitingCourseList, super.key});
 
   @override
   State<WaitingCourses> createState() => _WaitingCoursesState();
@@ -30,39 +33,50 @@ class _WaitingCoursesState extends State<WaitingCourses> {
                     color: AppColors.lightGrey, blurRadius: 1, spreadRadius: 1)
               ]),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const SizedBox(
+              SizedBox(
                   height: 100,
                   width: 90,
-                  child: Image(image: AssetImage(course),fit: BoxFit.fill,)
+                  child: Image(
+                    image: NetworkImage(widget.waitingCourseList[index].image!),
+                    fit: BoxFit.fill,
+                  )),
+              const SizedBox(
+                width: 20,
               ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'name of course',
+                    widget.waitingCourseList[index].title!,
                     style: AppTextStyles.name,
                   ),
                   Text(
-                    'name of instructor',
+                    widget.waitingCourseList[index].nameInstructor!,
                     style: AppTextStyles.smTitles,
                   ),
                   Text(
-                    'date',
+                    widget.waitingCourseList[index].date![0],
                     style: AppTextStyles.smTitles,
                   ),
                 ],
               ),
+              const Expanded(child: SizedBox()),
               Row(
                 children: [
                   IconButton(
                       onPressed: () {
-                        navigateTo(context,  const CoursesInfo(type: 'request',));
+                        navigateTo(
+                            context,
+                            UserCoursesInfo(
+                              type: 'request',
+                              courseModel: widget.waitingCourseList[index],
+                            ));
                       },
-                      icon: const Icon(Icons.arrow_forward_ios,
-                        color: AppColors.green ,
+                      icon: const Icon(
+                        Icons.arrow_forward_ios,
+                        color: AppColors.green,
                         size: 25,
                       )),
                 ],
@@ -71,7 +85,7 @@ class _WaitingCoursesState extends State<WaitingCourses> {
           ),
         );
       },
-      itemCount: 2,
+      itemCount: widget.waitingCourseList.length,
     );
   }
 }

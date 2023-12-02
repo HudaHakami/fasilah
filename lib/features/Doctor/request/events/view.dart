@@ -1,3 +1,4 @@
+import 'package:fasilah_m1/features/Doctor/cubit/user_cubit.dart';
 import 'package:fasilah_m1/features/Doctor/request/events/refused.dart';
 import 'package:fasilah_m1/features/Doctor/request/events/waiting.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +38,7 @@ class _EventsStatusState extends State<EventsStatus>
         backgroundColor: AppColors.white2,
         body: SingleChildScrollView(
           physics:
-              const ClampingScrollPhysics(parent: NeverScrollableScrollPhysics()),
+          const ClampingScrollPhysics(parent: NeverScrollableScrollPhysics()),
           child: Column(
             children: [
               SizedBox(
@@ -78,13 +79,13 @@ class _EventsStatusState extends State<EventsStatus>
                       ],
                     )),
                   ),
-                  const Expanded(
+                  Expanded(
                     child: SizedBox(
                       child: TabBarView(
                         children: [
-                          WaitingEvents(),
-                          AcceptedEvents(),
-                          RefusedEvents(),
+                          WaitingEvents(waitingEventsList: UserCubit.get(context).myWaitingEventsList),
+                          AcceptedEvents(acceptedEventsList: UserCubit.get(context).myAcceptedEventsList),
+                          RefusedEvents(refusedEventsList:  UserCubit.get(context).myRefusedEventsList),
                         ],
                       ),
                     ),

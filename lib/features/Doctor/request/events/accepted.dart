@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import '../../../../models/event_model.dart';
 import '../../../../shared/components/constants.dart';
 import '../../../../shared/components/navigator.dart';
 import '../../../../shared/styles/colors.dart';
-import '../../../../shared/styles/images.dart';
 import '../../../../shared/styles/styles.dart';
-import '../../../admin/events/event_info.dart';
+import '../../userEventInfo.dart';
+
 class AcceptedEvents extends StatefulWidget {
-  const AcceptedEvents({super.key});
+  final List<EventModel> acceptedEventsList;
+
+  const AcceptedEvents({required this.acceptedEventsList, super.key});
 
   @override
   State<AcceptedEvents> createState() => _AcceptedEventsState();
@@ -32,37 +35,40 @@ class _AcceptedEventsState extends State<AcceptedEvents> {
                     spreadRadius: 1)
               ]),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const SizedBox(
+              SizedBox(
                   height: 100,
                   width: 90,
                   child: Image(
-                    image: AssetImage(events),
+                    image: NetworkImage(
+                        widget.acceptedEventsList[index].image!),
                     fit: BoxFit.fill,
                   )),
+              const SizedBox(width: 20,),
               Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'name of event',
+                    widget.acceptedEventsList[index].title!,
                     style: AppTextStyles.name,
                   ),
                   Text(
-                    '20/10/2023',
+                    widget.acceptedEventsList[index].date![0],
                     style: AppTextStyles.smTitles,
                   ),
                 ],
               ),
+              const Expanded(child: SizedBox()),
               Row(
                 children: [
                   IconButton(
                       onPressed: () {
-                        navigateTo(context,  const EventInfo(type: 'request',));
+                        navigateTo(
+                            context, UserEventInfo(type: 'request', model: widget.acceptedEventsList[index],));
                       },
                       icon: const Icon(Icons.arrow_forward_ios,
-                        color: AppColors.green ,
+                        color: AppColors.green,
                         size: 25,
                       )),
                 ],
@@ -71,7 +77,7 @@ class _AcceptedEventsState extends State<AcceptedEvents> {
           ),
         );
       },
-      itemCount: 5
+      itemCount: widget.acceptedEventsList.length
       ,
     );
   }

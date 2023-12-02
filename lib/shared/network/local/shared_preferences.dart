@@ -33,7 +33,7 @@ class CacheHelper {
 
     return await sharedPreferences.setDouble(key, value);
   }
-  
+
   static Future<bool> removeToken (
       {
         required String key,

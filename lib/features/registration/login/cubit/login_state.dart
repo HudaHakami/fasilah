@@ -33,3 +33,4 @@ class GetDataErrorState extends LoginState {
 
   GetDataErrorState(this.error);
 }
+class RegisterShowPasswordVisibilityState extends LoginState {}

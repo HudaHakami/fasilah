@@ -47,6 +47,14 @@ dependencies:
   url_launcher:
   intl:
   flutter_expandable_fab: ^2.0.0
+  flutter_pdfview: ^1.0.4
+  flutter_cache_manager: ^3.2.0
+  awesome_notifications:
+  awesome_notifications_core:
+  file_picker:
+
+
+
 
   # fire base
   firebase_core:
@@ -63,6 +71,12 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  integration_test:
+    sdk: flutter
+  mockito: ^5.0.0
+
+
+
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

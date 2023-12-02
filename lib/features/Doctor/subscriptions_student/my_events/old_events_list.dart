@@ -1,13 +1,15 @@
+import 'package:fasilah_m1/models/event_model.dart';
 import 'package:flutter/material.dart';
-
 import '../../../../shared/components/constants.dart';
 import '../../../../shared/components/navigator.dart';
 import '../../../../shared/styles/colors.dart';
-import '../../../../shared/styles/images.dart';
 import '../../../../shared/styles/styles.dart';
-import '../../../admin/events/event_info.dart';
+import '../../userEventInfo.dart';
+
 class OldEventList extends StatefulWidget {
-  const OldEventList({super.key});
+  final List<EventModel> eventList;
+
+  const OldEventList({required this.eventList, super.key});
 
   @override
   State<OldEventList> createState() => _OldEventListState();
@@ -16,7 +18,7 @@ class OldEventList extends StatefulWidget {
 class _OldEventListState extends State<OldEventList> {
   @override
   Widget build(BuildContext context) {
-    return  ListView.builder(
+    return ListView.builder(
       itemBuilder: (context, index) {
         return Container(
           width: width(context, 1),
@@ -33,34 +35,35 @@ class _OldEventListState extends State<OldEventList> {
                     spreadRadius: 1)
               ]),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const SizedBox(
+              SizedBox(
                   height: 100,
                   width: 90,
                   child: Image(
-                    image: AssetImage(events),
+                    image: NetworkImage(widget.eventList[index].image!),
                     fit: BoxFit.fill,
                   )),
+              const SizedBox(width: 20,),
               Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'name of event',
+                    widget.eventList[index].title!,
                     style: AppTextStyles.name,
                   ),
                   Text(
-                    '20/10/2023',
+                    widget.eventList[index].date![0],
                     style: AppTextStyles.smTitles,
                   ),
                 ],
               ),
+              const Expanded(child: SizedBox()),
               Row(
                 children: [
                   IconButton(
                       onPressed: () {
-                        navigateTo(context,  const EventInfo(type: 'subscribe',));
+                        navigateTo(context,   UserEventInfo(type: 'subscribe',model: widget.eventList[index],));
                       },
                       icon: const Icon(Icons.arrow_forward_ios,
                         color: AppColors.green ,
@@ -72,7 +75,7 @@ class _OldEventListState extends State<OldEventList> {
           ),
         );
       },
-      itemCount: 6
+      itemCount: widget.eventList.length
       ,
     );
   }

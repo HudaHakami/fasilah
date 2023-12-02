@@ -9,20 +9,20 @@ abstract class AppTextStyles {
   static TextStyle boldTitles = GoogleFonts.tajawal(
       fontWeight: FontWeight.bold, fontSize: 25, color: AppColors.black);
   static TextStyle w400b =
-      GoogleFonts.tajawal(fontWeight: FontWeight.bold, fontSize: 14);
+  GoogleFonts.tajawal(fontWeight: FontWeight.bold, fontSize: 14);
 
   /// - weight: w300
   /// - family: cairo
   static const TextStyle w300 =
-      TextStyle(fontWeight: FontWeight.w300, fontSize: 30);
+  TextStyle(fontWeight: FontWeight.w300, fontSize: 30);
 
   /// - weight: w400
   /// - family: cairo
   static TextStyle w400 =
-      GoogleFonts.tajawal(fontWeight: FontWeight.w400, fontSize: 18);
+  GoogleFonts.tajawal(fontWeight: FontWeight.w400, fontSize: 18);
   static TextStyle w400s =
-      GoogleFonts.tajawal(fontWeight: FontWeight.w600
-          , fontSize: 12 );
+  GoogleFonts.tajawal(fontWeight: FontWeight.w600
+      , fontSize: 12 );
 
   /// - weight: w500
   /// - family: cairo
@@ -36,12 +36,12 @@ abstract class AppTextStyles {
   /// - weight: w700
   /// - family: cairo
   static const TextStyle lrTitles =
-      TextStyle(fontWeight: FontWeight.w500, fontSize: 30);
+  TextStyle(fontWeight: FontWeight.w500, fontSize: 30);
 
   /// - weight: w800
   /// - family: cairo
   static TextStyle w800 =
-      GoogleFonts.tajawal(fontWeight: FontWeight.w800, fontSize: 18);
+  GoogleFonts.tajawal(fontWeight: FontWeight.w800, fontSize: 18);
 
   /// - weight: w900
   /// - family: cairo

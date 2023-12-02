@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
-
+import '../../../../models/courses_model.dart';
 import '../../../../shared/components/constants.dart';
 import '../../../../shared/components/navigator.dart';
 import '../../../../shared/styles/colors.dart';
-import '../../../../shared/styles/images.dart';
 import '../../../../shared/styles/styles.dart';
-import '../../../admin/courses/courses_info.dart';
+import '../../user_course_info.dart';
+
 class NewCoursesList extends StatefulWidget {
-  const NewCoursesList({super.key});
+  final List<CourseModel> courseList;
+
+  const NewCoursesList({required this.courseList, super.key});
 
   @override
   State<NewCoursesList> createState() => _NewCoursesListState();
@@ -31,39 +33,50 @@ class _NewCoursesListState extends State<NewCoursesList> {
                     color: AppColors.lightGrey, blurRadius: 1, spreadRadius: 1)
               ]),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const SizedBox(
+              SizedBox(
                   height: 100,
                   width: 90,
-                  child: Image(image: AssetImage(course),fit: BoxFit.fill,)
+                  child: Image(
+                    image: NetworkImage(widget.courseList[index].image!),
+                    fit: BoxFit.fill,
+                  )),
+              const SizedBox(
+                width: 20,
               ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'name of course',
+                    widget.courseList[index].title!,
                     style: AppTextStyles.name,
                   ),
                   Text(
-                    'name of instructor',
+                    widget.courseList[index].nameInstructor!,
                     style: AppTextStyles.smTitles,
                   ),
                   Text(
-                    'date',
+                    widget.courseList[index].date![0],
                     style: AppTextStyles.smTitles,
                   ),
                 ],
               ),
+              const Expanded(child: SizedBox()),
               Row(
                 children: [
                   IconButton(
                       onPressed: () {
-                        navigateTo(context,  const CoursesInfo(type: 'subscripe',));
+                        navigateTo(
+                            context,
+                            UserCoursesInfo(
+                              type: 'subscripe',
+                              courseModel: widget.courseList[index],
+                            ));
                       },
-                      icon: const Icon(Icons.arrow_forward_ios,
-                        color: AppColors.green ,
+                      icon: const Icon(
+                        Icons.arrow_forward_ios,
+                        color: AppColors.green,
                         size: 25,
                       )),
                 ],
@@ -72,7 +85,7 @@ class _NewCoursesListState extends State<NewCoursesList> {
           ),
         );
       },
-      itemCount: 3,
+      itemCount: widget.courseList.length,
     );
   }
 }

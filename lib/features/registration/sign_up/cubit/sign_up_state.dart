@@ -23,4 +23,7 @@ class SignUpErrorState extends SignUpState {
   SignUpErrorState(this.error);
 }
 
+class RegisterShowPasswordVisibilityState extends SignUpState {}
+
+
 

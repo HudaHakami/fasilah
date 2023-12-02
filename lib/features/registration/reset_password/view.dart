@@ -21,72 +21,76 @@ class _ResetPasswordState extends State<ResetPassword> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => ResetPasswordCubit(),
-      child: BlocListener<ResetPasswordCubit, ResetPasswordState>(
+      child: BlocConsumer<ResetPasswordCubit, ResetPasswordState>(
         listener: (context, state) {
           if (state is ResetPasswordSuccessState) {
+            print('hhhh');
             showToast(
                 text: 'تم الارسال بنجاح الي البريد الإلكتروني',
                 state: ToastStates.success);
           }
-
         },
-        child: Scaffold(
-          appBar: AppBar(
-            title: const Text('Forget password'),
-            leading: IconButton(
-                onPressed: () => navigatePop(context),
-                icon: const Icon(
-                  Icons.arrow_back,
-                )),
-          ),
-          body: BackgroundBox(
-            widget: Column(
-              children: [
-                Form(
-                  key: formKey,
-                  child: Column(
-                    children: [
-                      const SizedBox(
-                        height: 50,
-                      ),
-                      TextFieldTemplate(
-                        hintText: 'example@gmail.com',
-                        icon: Icons.mail_outlined,
-                        keyType: TextInputType.emailAddress,
-                        controller: emailController,
-                        validator: (String? value) {
-                          if (value!.isEmpty) {
-                            return 'please enter your email';
-                          } else if (value.length < 5) {
-                            return 'please write email in correct way';
-                          } else if (!value.toString().contains('@')) {
-                            return 'email must contain @';
-                          }
-                        },
-                        labelText: 'Email',
-                      ),
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      ButtonTemplate(
-                          minwidth: width(context, 2),
-                          color: AppColors.brown,
-                          text1: 'send',
-                          onPressed: () => {
-                            if (formKey.currentState!.validate())
-                              {
-                                ResetPasswordCubit.get(context)
-                                    .resetPassword(email: emailController.text)
-                              }
-                          }),
-                    ],
-                  ),
-                )
-              ],
+        builder: (context, state) {
+          return Scaffold(
+            appBar: AppBar(
+              title: const Text('Forget password'),
+              leading: IconButton(
+                  onPressed: () => navigatePop(context),
+                  icon: const Icon(
+                    Icons.arrow_back,
+                  )),
             ),
-          ),
-        ),
+            body: BackgroundBox(
+              widget: Column(
+                children: [
+                  Form(
+                    key: formKey,
+                    child: Column(
+                      children: [
+                        const SizedBox(
+                          height: 50,
+                        ),
+                        TextFieldTemplate(
+                          hintText: 'example@gmail.com',
+                          icon: Icons.mail_outlined,
+                          keyType: TextInputType.emailAddress,
+                          controller: emailController,
+                          validator: (String? value) {
+                            if (value!.isEmpty) {
+                              return 'please enter your email';
+                            } else if (value.length < 5) {
+                              return 'please write email in correct way';
+                            } else if (!value.toString().contains('@')) {
+                              return 'email must contain @';
+                            }
+                          },
+                          labelText: 'Email',
+                        ),
+                        const SizedBox(
+                          height: 30,
+                        ),
+                        ButtonTemplate(
+                            minwidth: width(context, 2),
+                            color: AppColors.brown,
+                            text1: 'send',
+                            onPressed: () => {
+                              if (formKey.currentState!.validate())
+                                {
+                                  ResetPasswordCubit.get(context)
+                                      .resetPassword(
+                                      email: emailController.text)
+                                }
+                            }),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ),
+          );
+        },
       ),
     );
   }
 }
+

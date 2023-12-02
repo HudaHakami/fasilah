@@ -1,12 +1,17 @@
+import 'package:fasilah_m1/models/courses_model.dart';
 import 'package:flutter/material.dart';
 import '../../../shared/components/constants.dart';
 import '../../../shared/components/navigator.dart';
 import '../../../shared/styles/colors.dart';
-import '../../../shared/styles/images.dart';
 import '../../../shared/styles/styles.dart';
-import '../../admin/courses/courses_info.dart';
+import '../user_course_info.dart';
+
 class CoursesScreen extends StatefulWidget {
-  const CoursesScreen({super.key});
+  final List<CourseModel> courseList;
+  final String? filter;
+
+  const CoursesScreen(
+      {required this.courseList, required this.filter, super.key});
 
   @override
   State<CoursesScreen> createState() => _CoursesScreenState();
@@ -14,64 +19,97 @@ class CoursesScreen extends StatefulWidget {
 
 class _CoursesScreenState extends State<CoursesScreen> {
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return ListView.builder(
       itemBuilder: (context, index) {
-        return Container(
-          width: width(context, 1),
-          margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-          decoration: BoxDecoration(
-              color: AppColors.white2,
-              borderRadius: BorderRadius.circular(5),
-              border: Border.all(color: AppColors.green, width: 1.5),
-              boxShadow: const [
-                BoxShadow(
-                    color: AppColors.lightGrey, blurRadius: 1, spreadRadius: 1)
-              ]),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const SizedBox(
-                  height: 100,
-                  width: 90,
-                  child: Image(image: AssetImage(course),fit: BoxFit.fill,)
-              ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'name of course',
-                    style: AppTextStyles.name,
-                  ),
-                  Text(
-                    'name of instructor',
-                    style: AppTextStyles.smTitles,
-                  ),
-                  Text(
-                    'date',
-                    style: AppTextStyles.smTitles,
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  IconButton(
-                      onPressed: () {
-                        navigateTo(context,  const CoursesInfo(type: 'book',));
-                      },
-                      icon: const Icon(Icons.arrow_forward_ios,
-                        color: AppColors.green ,
-                        size: 25,
-                      )),
-                ],
-              )
-            ],
-          ),
-        );
+        print(widget.courseList.length);
+        return widget.filter == null || widget.filter == ""
+            ? buildCourseBox(
+          widget.courseList[index],
+        )
+            : widget.courseList[index].title!
+            .toLowerCase()
+            .contains(widget.filter!.toLowerCase())
+            ? buildCourseBox(
+          widget.courseList[index],
+        )
+            : Container();
       },
-      itemCount: 3,
+      itemCount: widget.courseList.length,
     );
   }
+
+  Widget buildCourseBox(CourseModel model ) {
+    return Container(
+      width: width(context, 1),
+      margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      decoration: BoxDecoration(
+          color: AppColors.white2,
+          borderRadius: BorderRadius.circular(5),
+          border: Border.all(color: AppColors.green, width: 1.5),
+          boxShadow: const [
+            BoxShadow(
+                color: AppColors.lightGrey, blurRadius: 1, spreadRadius: 1)
+          ]),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          SizedBox(
+              height: 100,
+              width: 90,
+              child: Image(
+                image: NetworkImage(model.image!),
+                fit: BoxFit.fill,
+              )),
+          const SizedBox(
+            width: 20,
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                model.title!,
+                style: AppTextStyles.name,
+              ),
+              Text(
+                model.nameInstructor!,
+                style: AppTextStyles.smTitles,
+              ),
+              Text(
+                model.date![0],
+                style: AppTextStyles.smTitles,
+              ),
+            ],
+          ),
+          const Expanded(child: SizedBox()),
+          Row(
+            children: [
+              IconButton(
+                  onPressed: () {
+                    navigateTo(
+                        context,
+                        UserCoursesInfo(
+                          type: 'book',
+                          courseModel: model,
+                        ));
+                  },
+                  icon: const Icon(
+                    Icons.arrow_forward_ios,
+                    color: AppColors.green,
+                    size: 25,
+                  )),
+            ],
+          )
+        ],
+      ),
+    ) ;
+  }
+
 }

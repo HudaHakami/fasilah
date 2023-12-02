@@ -40,8 +40,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
             }
           }
           if (state is SignUpErrorState) {
-            final errorMsg = AuthExceptionHandler.generateExceptionMessage(
-                state.error);
+            final errorMsg =
+            AuthExceptionHandler.generateExceptionMessage(state.error);
             showToast(text: errorMsg, state: ToastStates.error);
           }
         },
@@ -81,21 +81,32 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     },
                     labelText: 'Email',
                   ),
+
                   //Password TextFiled
-                  TextFieldTemplate(
+
+                  defaultFormField(
                     hintText: '**********',
-                    icon: Icons.lock,
-                    keyType: TextInputType.visiblePassword,
                     controller: passwordController,
-                    validator: (String? value) {
+                    isPassword: SignUpCubit.get(context).isPassword,
+                    type: TextInputType.visiblePassword,
+                    suffixIcon: SignUpCubit.get(context).suffixIcon,
+                    suffixPressed: () {
+                      SignUpCubit.get(context).changePasswordVisibility();
+                    },
+                    label: 'Password',
+                    labelText: 'Password',
+                    prefixIcon: Icons.lock_outline,
+                    icon: Icons.lock,
+                    validate: (String? value) {
                       if (value!.isEmpty) {
                         return 'please enter password ';
                       } else if (value.length < 6) {
                         return 'The password must consist of at least 6 digits ';
                       }
+                      return null;
                     },
-                    labelText: 'Password',
                   ),
+
                   const SizedBox(
                     height: 10,
                   ),

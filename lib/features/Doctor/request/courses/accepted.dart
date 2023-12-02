@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
-
+import '../../../../models/courses_model.dart';
 import '../../../../shared/components/constants.dart';
 import '../../../../shared/components/navigator.dart';
 import '../../../../shared/styles/colors.dart';
-import '../../../../shared/styles/images.dart';
 import '../../../../shared/styles/styles.dart';
-import '../../../admin/courses/courses_info.dart';
+import '../../user_course_info.dart';
+
 class AcceptedCourses extends StatefulWidget {
-  const AcceptedCourses({super.key});
+  final List<CourseModel> acceptedCourseList;
+
+  const AcceptedCourses({required this.acceptedCourseList, super.key});
 
   @override
   State<AcceptedCourses> createState() => _AcceptedCoursesState();
@@ -16,7 +18,7 @@ class AcceptedCourses extends StatefulWidget {
 class _AcceptedCoursesState extends State<AcceptedCourses> {
   @override
   Widget build(BuildContext context) {
-    return   ListView.builder(
+    return ListView.builder(
       itemBuilder: (context, index) {
         return Container(
           width: width(context, 1),
@@ -33,37 +35,42 @@ class _AcceptedCoursesState extends State<AcceptedCourses> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const SizedBox(
+              SizedBox(
                   height: 100,
                   width: 90,
-                  child: Image(image: AssetImage(course),fit: BoxFit.fill,)
-              ),
+                  child: Image(
+                    image: NetworkImage(widget.acceptedCourseList[index].image!),
+                    fit: BoxFit.fill,
+                  )),
+              const SizedBox(width: 20,),
               Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'name of course',
+                    widget.acceptedCourseList[index].title!,
                     style: AppTextStyles.name,
                   ),
                   Text(
-                    'name of instructor',
+                    widget.acceptedCourseList[index].nameInstructor!,
                     style: AppTextStyles.smTitles,
                   ),
                   Text(
-                    'date',
+                    widget.acceptedCourseList[index].date![0],
                     style: AppTextStyles.smTitles,
                   ),
                 ],
               ),
+              const Expanded(child: SizedBox()),
               Row(
                 children: [
                   IconButton(
                       onPressed: () {
-                        navigateTo(context,  const CoursesInfo(type: 'request',));
+                        navigateTo(context,   UserCoursesInfo(type: 'request',courseModel: widget.acceptedCourseList[index],));
                       },
-                      icon: const Icon(Icons.arrow_forward_ios,
-                        color: AppColors.green ,
+                      icon: const Icon(
+                        Icons.arrow_forward_ios,
+                        color: AppColors.green,
                         size: 25,
                       )),
                 ],
@@ -72,7 +79,7 @@ class _AcceptedCoursesState extends State<AcceptedCourses> {
           ),
         );
       },
-      itemCount: 1,
+      itemCount: widget.acceptedCourseList.length,
     );
   }
 }

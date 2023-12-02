@@ -1,7 +1,11 @@
-// ignore_for_file: must_be_immutable
+// ignore_for_file: must_be_immutable, library_private_types_in_public_api
+
+import 'dart:io';
 
 import 'package:fasilah_m1/shared/styles/images.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../styles/colors.dart';
@@ -42,12 +46,12 @@ class ButtonTemplate extends StatelessWidget {
                 text: "",
                 style: TextStyle(color: Colors.white, fontSize: fontSize),
                 children: [
-              TextSpan(text: text1, style: AppTextStyles.button),
-              TextSpan(text: text2),
-              TextSpan(
-                  text: text3,
-                  style: const TextStyle(fontWeight: FontWeight.bold)),
-            ])),
+                  TextSpan(text: text1, style: AppTextStyles.button),
+                  TextSpan(text: text2),
+                  TextSpan(
+                      text: text3,
+                      style: const TextStyle(fontWeight: FontWeight.bold)),
+                ])),
       ),
     );
   }
@@ -89,29 +93,195 @@ class SmallButtonTemplate extends StatelessWidget {
                 text: "",
                 style: TextStyle(color: Colors.white, fontSize: fontSize),
                 children: [
-              TextSpan(text: text1, style: AppTextStyles.button),
-              TextSpan(text: text2),
-              TextSpan(
-                  text: text3,
-                  style: const TextStyle(fontWeight: FontWeight.bold)),
-            ])),
+                  TextSpan(text: text1, style: AppTextStyles.button),
+                  TextSpan(text: text2),
+                  TextSpan(
+                      text: text3,
+                      style: const TextStyle(fontWeight: FontWeight.bold)),
+                ])),
+      ),
+    );
+  }
+}
+
+Widget defaultFormField({
+  required TextEditingController controller,
+  required TextInputType type,
+  FormFieldValidator<String>? onSubmit,
+  FormFieldValidator<String>? onChange,
+  bool isPassword = false,
+  VoidCallback? onTab,
+  final String? value,
+  final FormFieldValidator<String>? validate,
+  required String label,
+  required String hintText,
+  required String labelText,
+  required IconData prefixIcon,
+  required IconData icon,
+  IconData? suffixIcon,
+  VoidCallback? suffixPressed,
+  bool isClickable = true,
+}) =>
+    Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 30,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          TextButton.icon(
+            label: Text(labelText,
+                style: GoogleFonts.tajawal(
+                    fontSize: 18,
+                    color: AppColors.black,
+                    fontWeight: FontWeight.w600)),
+            icon: Icon(
+              icon,
+              color: AppColors.black,
+              size: 20,
+            ),
+            onPressed: null,
+          ),
+          TextFormField(
+            //  keyboardAppearance: Brightness.dark,
+            controller: controller,
+            obscureText: isPassword,
+            onTap: onTab,
+            keyboardType: type,
+            enabled: isClickable,
+            onFieldSubmitted: onSubmit,
+            // onChanged: (String? value) {
+            //   onChange;
+            // },
+            onChanged: onChange,
+            validator: validate,
+            decoration: InputDecoration(
+                hintText: hintText,
+                border: InputBorder.none,
+                filled: true,
+                fillColor: AppColors.white2,
+                labelText: label,
+                prefixIcon: Icon(
+                  prefixIcon,
+                ),
+                suffixIcon: suffixIcon != null
+                    ? IconButton(onPressed: suffixPressed, icon: Icon(suffixIcon))
+                    : null,
+                hintStyle:
+                const TextStyle(color: AppColors.greyDark, fontSize: 15),
+                enabledBorder: const OutlineInputBorder(
+                  borderSide: BorderSide(color: AppColors.grey, width: 1.5),
+                ),
+                focusedBorder: const OutlineInputBorder(
+                  borderSide: BorderSide(color: AppColors.grey, width: 1.5),
+                ),
+                errorBorder: const OutlineInputBorder(
+                  borderSide: BorderSide(color: AppColors.grey, width: 1.5),
+                ),
+                disabledBorder: const OutlineInputBorder(
+                  borderSide: BorderSide(color: AppColors.grey, width: 1.5),
+                )),
+          ),
+        ],
+      ),
+    );
+
+class PasswordTextFieldTemplate extends StatelessWidget {
+  PasswordTextFieldTemplate({Key? key,
+    required this.hintText,
+    required this.labelText,
+    this.controller,
+    this.obscureText = false,
+    this.readOnly = false,
+    this.validator,
+    this.icon,
+    this.icondata,
+    this.keyType,
+    this.lines})
+      : super(key: key);
+
+  String hintText;
+  String labelText;
+  TextEditingController? controller;
+  bool obscureText;
+  Function? validator;
+  IconData? icon;
+  IconData? icondata;
+  int? lines;
+  TextInputType? keyType;
+  bool readOnly;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 30,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          TextButton.icon(
+            label: Text(labelText,
+                style: GoogleFonts.tajawal(
+                    fontSize: 18,
+                    color: AppColors.black,
+                    fontWeight: FontWeight.w600)),
+            icon: Icon(
+              icon!,
+              color: AppColors.black,
+              size: 20,
+            ),
+            onPressed: null,
+          ),
+          TextFormField(
+            obscureText: obscureText,
+            maxLines: lines,
+            controller: controller,
+            validator: (value) => validator!(value),
+            keyboardType: keyType,
+            readOnly: readOnly,
+            decoration: InputDecoration(
+                hintText: hintText,
+                border: InputBorder.none,
+                filled: true,
+                prefixIcon: Icon(
+                  icondata!,
+                  color: AppColors.black,
+                  size: 20,
+                ),
+                fillColor: AppColors.white2,
+                hintStyle:
+                const TextStyle(color: AppColors.greyDark, fontSize: 15),
+                enabledBorder: const OutlineInputBorder(
+                  borderSide: BorderSide(color: AppColors.grey, width: 1.5),
+                ),
+                focusedBorder: const OutlineInputBorder(
+                  borderSide: BorderSide(color: AppColors.grey, width: 1.5),
+                ),
+                errorBorder: const OutlineInputBorder(
+                  borderSide: BorderSide(color: AppColors.grey, width: 1.5),
+                ),
+                disabledBorder: const OutlineInputBorder(
+                  borderSide: BorderSide(color: AppColors.grey, width: 1.5),
+                )),
+          ),
+        ],
       ),
     );
   }
 }
 
 class TextFieldTemplate extends StatelessWidget {
-  TextFieldTemplate(
-      {Key? key,
-      required this.hintText,
-      required this.labelText,
-      this.controller,
-      this.obscureText = false,
-      this.readOnly = false,
-      this.validator,
-      this.icon,
-      this.keyType,
-      this.lines})
+  TextFieldTemplate({Key? key,
+    required this.hintText,
+    required this.labelText,
+    this.controller,
+    this.obscureText = false,
+    this.readOnly = false,
+    this.validator,
+    this.icon,
+    this.keyType,
+    this.lines})
       : super(key: key);
 
   String hintText;
@@ -159,7 +329,7 @@ class TextFieldTemplate extends StatelessWidget {
                 filled: true,
                 fillColor: AppColors.white2,
                 hintStyle:
-                    const TextStyle(color: AppColors.greyDark, fontSize: 15),
+                const TextStyle(color: AppColors.greyDark, fontSize: 15),
                 enabledBorder: const OutlineInputBorder(
                   borderSide: BorderSide(color: AppColors.grey, width: 1.5),
                 ),
@@ -230,12 +400,11 @@ class ItemBox extends StatelessWidget {
   String? icon;
   bool? uploaded = false;
 
-  ItemBox(
-      {required this.onPressed,
-      required this.text,
-      required this.icon,
-      this.uploaded,
-      super.key});
+  ItemBox({required this.onPressed,
+    required this.text,
+    required this.icon,
+    this.uploaded,
+    super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -278,14 +447,13 @@ class Box extends StatelessWidget {
   Color? color;
   AlignmentGeometry? dirction;
 
-  Box(
-      {this.color,
-      this.style,
-      this.width,
-      this.height,
-      this.text,
-      this.dirction,
-      Key? key})
+  Box({this.color,
+    this.style,
+    this.width,
+    this.height,
+    this.text,
+    this.dirction,
+    Key? key})
       : super(key: key);
 
   @override
@@ -385,12 +553,18 @@ class BackgroundBox extends StatelessWidget {
         Container(
           color: AppColors.lightGreen,
           alignment: Alignment.topCenter,
-          height: MediaQuery.of(context).size.height,
+          height: MediaQuery
+              .of(context)
+              .size
+              .height,
           width: width(context, 1),
         ),
         Container(
             width: width(context, 1),
-            height: MediaQuery.of(context).size.height / 1,
+            height: MediaQuery
+                .of(context)
+                .size
+                .height / 1,
             decoration: const BoxDecoration(
                 color: AppColors.white,
                 borderRadius: BorderRadius.only(
@@ -411,20 +585,16 @@ class TextFieldUser extends StatelessWidget {
   Function? validator;
   final TextEditingController? controller;
   TextInputType? keyType;
-  void Function()? onTap;
-
 
   // ignore: use_key_in_widget_constructors
-  TextFieldUser(
-      {this.hintText,
-      required this.labelText,
-      this.controller,
-      required this.scure,
-      required this.validator,
-      required this.keyType,
-      this.onTap,
-      initialValue,
-      this.txt});
+  TextFieldUser({this.hintText,
+    required this.labelText,
+    this.controller,
+    required this.scure,
+    required this.validator,
+    required this.keyType,
+    initialValue,
+    this.txt});
 
   @override
   Widget build(BuildContext context) {
@@ -434,7 +604,6 @@ class TextFieldUser extends StatelessWidget {
         initialValue: txt,
         validator: (value) => validator!(value),
         controller: controller,
-        onTap: onTap,
         obscureText: scure,
         keyboardType: keyType,
         decoration: InputDecoration(
@@ -450,11 +619,55 @@ class TextFieldUser extends StatelessWidget {
   }
 }
 
+class TextFieldClicked extends StatelessWidget {
+  final String? hintText;
+  final String labelText;
+  final String? txt;
+  final bool scure;
+  Function? validator;
+  TextInputType? keyType;
+  void Function()? onTap;
+  final TextEditingController? controller;
+
+  // ignore: use_key_in_widget_constructors
+  TextFieldClicked({this.hintText,
+    required this.labelText,
+    required this.scure,
+    required this.keyType,
+    this.onTap,
+    this.controller,
+    this.validator,
+    initialValue,
+    this.txt});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+      child: TextFormField(
+        initialValue: txt,
+        onTap: onTap,
+        validator: (value) => validator!(value),
+        obscureText: scure,
+        keyboardType: keyType,
+        controller: controller,
+        decoration: InputDecoration(
+          // prefixIcon: Icon(Icons.star,size: 5,color: Colors.red,),
+          labelText: labelText,
+          labelStyle: AppTextStyles.labelStyle,
+          hintText: hintText,
+          hintStyle: AppTextStyles.hintStyle,
+          floatingLabelBehavior: FloatingLabelBehavior.always,
+        ),
+      ),
+    );
+  }
+}
 
 class Header extends StatelessWidget {
   final String? text;
   TextStyle? style;
-  AlignmentGeometry ? alignment;
+  AlignmentGeometry? alignment;
 
   Header({this.text, this.style, this.alignment, Key? key}) : super(key: key);
 
@@ -473,7 +686,6 @@ class Header extends StatelessWidget {
         ));
   }
 }
-
 
 class DisplayedTextFieldTemplate extends StatelessWidget {
   DisplayedTextFieldTemplate({Key? key,
@@ -505,8 +717,7 @@ class DisplayedTextFieldTemplate extends StatelessWidget {
             border: InputBorder.none,
             filled: true,
             fillColor: AppColors.white2,
-            hintStyle:
-            const TextStyle(color: AppColors.greyDark, fontSize: 15),
+            hintStyle: const TextStyle(color: AppColors.greyDark, fontSize: 15),
             enabledBorder: const OutlineInputBorder(
               borderSide: BorderSide(color: AppColors.grey, width: 1.5),
             ),
@@ -519,6 +730,56 @@ class DisplayedTextFieldTemplate extends StatelessWidget {
             disabledBorder: const OutlineInputBorder(
               borderSide: BorderSide(color: AppColors.grey, width: 1.5),
             )),
-      ),);
+      ),
+    );
+  }
+}
+
+class PdfViewer extends StatefulWidget {
+  final String firebaseUrl;
+
+  const PdfViewer({super.key, required this.firebaseUrl});
+
+  @override
+  _PdfViewerState createState() => _PdfViewerState();
+}
+
+class _PdfViewerState extends State<PdfViewer> {
+  String? pdfPath;
+  bool isLoading = true;
+
+  Future<String> downloadPDF(String firebaseUrl) async {
+    final DefaultCacheManager cacheManager = DefaultCacheManager();
+    final File file = await cacheManager.getSingleFile(firebaseUrl);
+    return file.path;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    loadPDF();
+  }
+
+  Future<void> loadPDF() async {
+    final path = await downloadPDF(widget.firebaseUrl);
+    setState(() {
+      pdfPath = path;
+      isLoading = false;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (isLoading) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
+    if (pdfPath != null) {
+      return PDFView(
+        filePath: pdfPath!,
+      );
+    }
+
+    return const Center(child: Text('Error loading PDF'));
   }
 }

@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import '../../../../models/event_model.dart';
 import '../../../../shared/components/constants.dart';
 import '../../../../shared/components/navigator.dart';
 import '../../../../shared/styles/colors.dart';
-import '../../../../shared/styles/images.dart';
 import '../../../../shared/styles/styles.dart';
-import '../../../admin/events/event_info.dart';
+import '../../userEventInfo.dart';
 
 class RefusedEvents extends StatefulWidget {
-  const RefusedEvents({super.key});
+  final List<EventModel> refusedEventsList;
+
+  const RefusedEvents({required this.refusedEventsList, super.key});
 
   @override
   State<RefusedEvents> createState() => _RefusedEventsState();
@@ -28,42 +30,49 @@ class _RefusedEventsState extends State<RefusedEvents> {
               border: Border.all(color: AppColors.green, width: 1.5),
               boxShadow: const [
                 BoxShadow(
-                    color: AppColors.lightGrey,
-                    blurRadius: 1,
-                    spreadRadius: 1)
+                    color: AppColors.lightGrey, blurRadius: 1, spreadRadius: 1)
               ]),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
             children: [
-              const SizedBox(
+              SizedBox(
                   height: 100,
                   width: 90,
                   child: Image(
-                    image: AssetImage(events),
+                    image: NetworkImage(widget.refusedEventsList[index].image!),
                     fit: BoxFit.fill,
                   )),
+              const SizedBox(width: 20,),
               Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'name of event',
+                    widget.refusedEventsList[index].title!,
                     style: AppTextStyles.name,
                   ),
                   Text(
-                    '20/10/2023',
+                    widget.refusedEventsList[index].date![0],
                     style: AppTextStyles.smTitles,
                   ),
                 ],
               ),
+              const Expanded(child: SizedBox()),
+
               Row(
                 children: [
                   IconButton(
                       onPressed: () {
-                        navigateTo(context,  const EventInfo(type: 'request',));
+                        navigateTo(
+                            context,
+                            UserEventInfo(
+                              type: 'request',
+                              model: widget.refusedEventsList[index],
+                            ));
                       },
-                      icon: const Icon(Icons.arrow_forward_ios,
-                        color: AppColors.green ,
+                      icon: const Icon(
+                        Icons.arrow_forward_ios,
+                        color: AppColors.green,
                         size: 25,
                       )),
                 ],
@@ -72,8 +81,7 @@ class _RefusedEventsState extends State<RefusedEvents> {
           ),
         );
       },
-      itemCount: 2
-      ,
+      itemCount: widget.refusedEventsList.length,
     );
   }
 }

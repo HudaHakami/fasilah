@@ -1,3 +1,4 @@
+import 'package:fasilah_m1/features/Doctor/cubit/user_cubit.dart';
 import 'package:fasilah_m1/features/Doctor/request/courses/refused.dart';
 import 'package:fasilah_m1/features/Doctor/request/courses/waiting.dart';
 import 'package:flutter/material.dart';
@@ -68,14 +69,13 @@ class _CoursesStatusState extends State<CoursesStatus>
                       ],
                     )),
                   ),
-                  const Expanded(
+                  Expanded(
                     child: SizedBox(
                       child: TabBarView(
                         children: [
-
-                          WaitingCourses(),
-                          AcceptedCourses(),
-                          RefusedCourses(),
+                          WaitingCourses(waitingCourseList: UserCubit.get(context).myWaitingCoursesList),
+                          AcceptedCourses(acceptedCourseList: UserCubit.get(context).myAcceptedCoursesList),
+                          RefusedCourses(refusedCourseList: UserCubit.get(context).myRefusedCoursesList),
                         ],
                       ),
                     ),

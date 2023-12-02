@@ -1,13 +1,15 @@
+import 'package:fasilah_m1/features/Doctor/subscriptions_doctor/subscribe_event_info.dart';
+import 'package:fasilah_m1/models/subscribe_event_model.dart';
 import 'package:flutter/material.dart';
-
 import '../../../shared/components/constants.dart';
 import '../../../shared/components/navigator.dart';
 import '../../../shared/styles/colors.dart';
-import '../../../shared/styles/images.dart';
 import '../../../shared/styles/styles.dart';
-import '../../admin/events/event_info.dart';
+
 class MyEvents extends StatefulWidget {
-  const MyEvents({super.key});
+  final List<SubscribeEventModel> eventList;
+
+  const MyEvents({required this.eventList, super.key});
 
   @override
   State<MyEvents> createState() => _MyEventsState();
@@ -28,42 +30,49 @@ class _MyEventsState extends State<MyEvents> {
               border: Border.all(color: AppColors.green, width: 1.5),
               boxShadow: const [
                 BoxShadow(
-                    color: AppColors.lightGrey,
-                    blurRadius: 1,
-                    spreadRadius: 1)
+                    color: AppColors.lightGrey, blurRadius: 1, spreadRadius: 1)
               ]),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const SizedBox(
+              SizedBox(
                   height: 100,
                   width: 90,
                   child: Image(
-                    image: AssetImage(events),
+                    image: NetworkImage(widget.eventList[index].image!),
                     fit: BoxFit.fill,
                   )),
+              const SizedBox(
+                width: 20,
+              ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'name of event',
+                    widget.eventList[index].title!,
                     style: AppTextStyles.name,
                   ),
                   Text(
-                    '20/10/2023',
+                    widget.eventList[index].date![0],
                     style: AppTextStyles.smTitles,
                   ),
                 ],
               ),
+              const Expanded(child: SizedBox()),
               Row(
                 children: [
                   IconButton(
                       onPressed: () {
-                        navigateTo(context,  const EventInfo(type: 'subscribe',));
+                        navigateTo(
+                            context,
+                            UserSubscribeEventInfo(
+                              model: widget.eventList[index],
+                            ));
                       },
-                      icon: const Icon(Icons.arrow_forward_ios,
-                        color: AppColors.green ,
+                      icon: const Icon(
+                        Icons.arrow_forward_ios,
+                        color: AppColors.green,
                         size: 25,
                       )),
                 ],
@@ -72,8 +81,7 @@ class _MyEventsState extends State<MyEvents> {
           ),
         );
       },
-      itemCount: 6
-      ,
+      itemCount: widget.eventList.length,
     );
   }
 }

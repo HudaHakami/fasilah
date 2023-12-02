@@ -13,7 +13,7 @@ class AuthExceptionHandler {
       case "wrong-password":
         status = AuthResultStatus.wrongPassword;
         break;
-        case "weak-password":
+      case "weak-password":
         status = AuthResultStatus.weakPassword;
         break;
       case "user-not-found":
@@ -22,7 +22,7 @@ class AuthExceptionHandler {
       case "user-disable":
         status = AuthResultStatus.userDisabled;
         break;
-        case "ERROR_TOO_MANY_REQUESTS":
+      case "ERROR_TOO_MANY_REQUESTS":
         status = AuthResultStatus.tooManyRequests;
         break;
       case "ERROR_OPERATION_NOT_ALLOWED":
@@ -49,7 +49,7 @@ class AuthExceptionHandler {
       case AuthResultStatus.wrongPassword:
         errorMessage = "Your password is wrong.";
         break;
-        case AuthResultStatus.weakPassword:
+      case AuthResultStatus.weakPassword:
         errorMessage = "Your password is weak try to write password with number and digits.";
         break;
       case AuthResultStatus.userNotFound:

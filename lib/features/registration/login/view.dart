@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:fasilah_m1/features/navigation/view.dart';
 import 'package:fasilah_m1/features/registration/login/cubit/login_cubit.dart';
 import 'package:fasilah_m1/features/visitors/view.dart';
@@ -9,6 +10,7 @@ import '../../../shared/components/constants.dart';
 import '../../../shared/components/navigator.dart';
 import '../../../shared/network/local/constant.dart';
 import '../../../shared/styles/colors.dart';
+import '../../Doctor/cubit/user_cubit.dart';
 import '../../admin/home/view.dart';
 import '../reset_password/view.dart';
 import '../sign_up/cubit/exception.dart';
@@ -33,15 +35,19 @@ class _LoginScreenState extends State<LoginScreen> {
         listener: (context, state) {
           if (state is LoginSuccessState) {
             if (state.type == 'doctor' || state.type == 'student') {
-              navigateTo(context, NavigationScreen());
+              UserCubit.get(context).getData();
+              UserCubit.get(context).getCoursesAndEvents();
+              Timer(const Duration(seconds: 1), () {
+                navigateTo(context, const NavigationScreen());
+              });
             }
             if (state.type == 'admin') {
               navigateTo(context, const AdminHomeScreen());
             }
           }
           if (state is LoginErrorState) {
-            final errorMsg = AuthExceptionHandler.generateExceptionMessage(
-                state.error);
+            final errorMsg =
+            AuthExceptionHandler.generateExceptionMessage(state.error);
             showToast(text: errorMsg, state: ToastStates.error);
           }
         },
@@ -63,31 +69,34 @@ class _LoginScreenState extends State<LoginScreen> {
                       keyType: TextInputType.emailAddress,
                       controller: emailController,
                       validator: (String? value) {
-                        if (value!.isEmpty) {
-                          return 'please enter your email';
-                        } else if (value.length < 5) {
-                          return 'please write email in correct way';
-                        } else if (!value.toString().contains('@')) {
-                          return 'email must contain @';
-                        }
+                        return validateEmail(value);
                       },
                       labelText: 'Email',
                     ),
                     //Password TextFiled
-                    TextFieldTemplate(
+                    defaultFormField(
                       hintText: '**********',
-                      icon: Icons.lock,
-                      keyType: TextInputType.visiblePassword,
                       controller: passwordController,
-                      validator: (String? value) {
+                      isPassword: LoginCubit.get(context).isPassword,
+                      type: TextInputType.visiblePassword,
+                      suffixIcon: LoginCubit.get(context).suffixIcon,
+                      suffixPressed: () {
+                        LoginCubit.get(context).changePasswordVisibility();
+                      },
+                      label: 'Password',
+                      labelText: 'Password',
+                      prefixIcon: Icons.lock_outline,
+                      icon: Icons.lock,
+                      validate: (String? value) {
                         if (value!.isEmpty) {
                           return 'please enter password ';
                         } else if (value.length < 6) {
                           return 'The password must consist of at least 6 digits ';
                         }
+                        return null;
                       },
-                      labelText: 'Password',
                     ),
+
                     //forget password
                     Padding(
                       padding: const EdgeInsets.symmetric(
@@ -108,8 +117,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     // login button
                     state is LoginLoadingState
                         ? const Center(child: CircularProgressIndicator())
-                        :
-                    Center(
+                        : Center(
                       child: ButtonTemplate(
                         color: AppColors.brown,
                         onPressed: () {
@@ -129,6 +137,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: InkWell(
                         onTap: () => {
                           type = 'visitors',
+                          UserCubit.get(context).getEventVisitor(),
                           navigateTo(context, const VisitorScreen())
                         },
                         child: Text("Continue as a visitor",
@@ -148,4 +157,15 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
+}
+
+validateEmail(value) {
+  if (value!.isEmpty) {
+    return 'please enter your email';
+  } else if (value.length < 5) {
+    return 'please write email in correct way';
+  } else if (!value.toString().contains('@')) {
+    return 'email must contain @';
+  }
+  return null;
 }
